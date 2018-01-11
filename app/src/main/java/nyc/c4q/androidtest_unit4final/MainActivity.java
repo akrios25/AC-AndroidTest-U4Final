@@ -1,9 +1,17 @@
 package nyc.c4q.androidtest_unit4final;
 
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private ColorAdapter adapter;
     protected HashMap<String, String> colorDict;
     protected List<String> colorsList;
+    Button moreBtn;
+    TextView moreTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,35 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ColorAdapter(colorsList, colorDict);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        moreBtn = (Button) findViewById(R.id.more_button);
+        moreTextView = (TextView) findViewById(R.id.more_textView);
+
+        moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                moreBtn.setVisibility(View.GONE);
+                moreTextView.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.info_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        Toast.makeText(this,"Fragment Manipulation Commenced", Toast.LENGTH_SHORT).show();
+        switch(item.getItemId()) {
+            case R.id.info:
+            findViewById(R.id.info_fragment).setVisibility(View.GONE);
+            break;
+        }
+
+        return true;
     }
 
     // TODO: Add options menu with the item "Info" which is always visible
